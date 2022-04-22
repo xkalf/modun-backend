@@ -1,24 +1,64 @@
-const { getProducts, createProduct } = require('../../Models/product.model')
+const Product = require('../../Models/product.model')
 
-async function getAllProduct (req, res) {
-  const products = await getProducts()
-  if (products && products[0].length > 0) {
-    res.status(200).json(products[0])
-  } else {
-    res.status(400).json('Product not found')
+async function getProduct (req, res) {
+  try {
+    const products = await Product.find()
+    if (products) {
+      return res.status(200).json(products)
+    } else {
+      return res.status(400).json('product not found')
+    }
+  } catch (err) {
+    return res.status(400).json(err)
   }
 }
 
-async function createProductController (req, res) {
-  const result = await createProduct(req.body)
-  if (result) {
-    res.status(200).json(result)
-  } else {
-    res.status(400).json('error')
+async function createProduct (req, res) {
+  try {
+    const newProduct = await new Product(req.body).save()
+    if (newProduct) {
+      return res.status(200).json(newProduct)
+    } else {
+      return res.status(400).json('Can not creat product')
+    }
+  } catch (err) {
+    return res.status(400).json(err)
   }
 }
+
+async function updateProduct (req, res) {
+  try {
+    const { id } = req.params
+    const updatedProduct = await Product.findByIdAndUpdate(
+      id,
+      {
+        $set: req.body
+      },
+      {
+        new: true
+      }
+    )
+    if (updatedProduct) return res.status(200).json(updatedProduct)
+    else return res.status(400).json("Can't update")
+  } catch (err) {
+    return res.status(400).json(err)
+  }
+}
+
+// async function deleteProduct (req, res) {
+//   try {
+//     const { id } = req.params
+//     const deletedProduct = Product.findByIdAndDelete(id)
+//     if (deletedProduct) return res.status(200).json(deletedProduct)
+//     else return res.status(400).json("Can't delete")
+//   } catch (err) {
+//     return res.status(400).json(err)
+//   }
+// }
 
 module.exports = {
-  getAllProduct,
-  createProductController
+  getProduct,
+  createProduct,
+  updateProduct
+  // deleteProduct
 }
