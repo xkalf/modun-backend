@@ -1,5 +1,6 @@
 const Company = require('../../Models/company.model')
 const Sector = require('../../Models/sector.model')
+const User = require('../../Models/user.model')
 
 async function getCompany (req, res) {
   try {
@@ -76,8 +77,9 @@ async function getProducts (req, res) {
 
 async function sendToSector (req, res) {
   try {
-    const { companyId, sectorId, product, quantity } = req.body
-    const company = await Company.findById(companyId)
+    const { user, sectorId, product, quantity } = req.body
+    const currentUser = await User.findById(user)
+    const company = await Company.findById(currentUser.company)
     const sector = await Sector.findById(sectorId)
     const companyProduct = company.products.find(el => el.product.toString() === product)
     const sectorProduct = sector.products.find(el => el.product.toString() === product)

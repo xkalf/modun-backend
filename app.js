@@ -6,6 +6,8 @@ const productRouter = require('./routes/product/product.router')
 const feeRouter = require('./routes/fee/fee.router')
 const sectorRouter = require('./routes/sector/sector.router')
 const purchaseRouter = require('./routes/purchase/purchase.router')
+const permissionRouter = require('./routes/permission/permission.router')
+const userRouter = require('./routes/user/user.router')
 
 const app = express()
 
@@ -20,5 +22,7 @@ app.use('/product', productRouter)
 app.use('/fee', feeRouter)
 app.use('/sector', sectorRouter)
 app.use('/purchase', purchaseRouter)
+app.use('/permission', permissionRouter)
+app.use('/user', userRouter)
 
 module.exports = app
