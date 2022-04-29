@@ -19,7 +19,7 @@ async function createProduct (req, res) {
     if (newProduct) {
       return res.status(200).json(newProduct)
     } else {
-      return res.status(400).json('Can not creat product')
+      return res.status(400).json("Can't create product")
     }
   } catch (err) {
     return res.status(400).json(err)

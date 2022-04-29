@@ -1,5 +1,6 @@
 const express = require('express')
 const cors = require('cors')
+const morgan = require('morgan')
 
 const companyRouter = require('./routes/company/company.router')
 const productRouter = require('./routes/product/product.router')
@@ -17,6 +18,7 @@ app.use(
   })
 )
 app.use(express.json())
+app.use(morgan('combined'))
 app.use('/company', companyRouter)
 app.use('/product', productRouter)
 app.use('/fee', feeRouter)
