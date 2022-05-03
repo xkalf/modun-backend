@@ -3,8 +3,8 @@ import { Types, Schema, model, Document } from 'mongoose'
 export interface ISell extends Document {
   products? : {
     product: Types.ObjectId,
-    quantity: Number,
-    discount?: Number
+    quantity: number,
+    discount?: number
   }[],
   company: Types.ObjectId
 }

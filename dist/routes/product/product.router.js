@@ -1,10 +1,10 @@
-'use strict'
-Object.defineProperty(exports, '__esModule', { value: true })
-const express_1 = require('express')
-const router = (0, express_1.Router)()
-const { checkPermission } = require('../../middleware')
-const { getProduct, createProduct, updateProduct } = require('./product.controller')
-router.get('/', getProduct)
-router.post('/', checkPermission('6268d7ee06dd5d359a69a73e'), createProduct)
-router.put('/:id', updateProduct)
-exports.default = router
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const middleware_1 = require("../../middleware");
+const product_controller_1 = require("./product.controller");
+const productRouter = (0, express_1.Router)();
+productRouter.get('/', product_controller_1.getProduct);
+productRouter.post('/', (0, middleware_1.checkPermission)('6268d7ee06dd5d359a69a73e'), product_controller_1.createProduct);
+productRouter.put('/:id', product_controller_1.updateProduct);
+exports.default = productRouter;

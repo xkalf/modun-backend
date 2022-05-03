@@ -12,6 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.AddPermission = exports.createUser = exports.getUser = void 0;
 const user_model_1 = __importDefault(require("../../Models/user.model"));
 const getUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -24,6 +25,7 @@ const getUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         return res.status(500).json(error);
     }
 });
+exports.getUser = getUser;
 const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const newUser = yield new user_model_1.default(req.body).save();
@@ -35,6 +37,7 @@ const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         return res.status(500).json(error);
     }
 });
+exports.createUser = createUser;
 const AddPermission = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id } = req.params;
@@ -53,8 +56,4 @@ const AddPermission = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         return res.status(500).json(error);
     }
 });
-exports.default = {
-    getUser,
-    createUser,
-    AddPermission
-};
+exports.AddPermission = AddPermission;

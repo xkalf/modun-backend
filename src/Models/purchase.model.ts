@@ -3,12 +3,14 @@ import { Types, Schema, model, Document } from 'mongoose'
 export interface IPurchase extends Document{
   products: {
     product: Types.ObjectId,
-  },
-  transportFee? : Number,
-  customsFee? : Number,
-  taxFee? : Number,
-  logisticFee?: Number
-  otherFee? : Number,
+    quantity: number,
+    costPrice: number
+  }[],
+  transportFee? : number,
+  customsFee? : number,
+  taxFee? : number,
+  logisticFee?: number
+  otherFee? : number,
   company: Types.ObjectId
 }
 

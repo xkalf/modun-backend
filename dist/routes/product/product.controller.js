@@ -12,6 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.updateProduct = exports.createProduct = exports.getProduct = void 0;
 const product_model_1 = __importDefault(require("../../Models/product.model"));
 function getProduct(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -29,6 +30,7 @@ function getProduct(req, res) {
         }
     });
 }
+exports.getProduct = getProduct;
 function createProduct(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -45,6 +47,7 @@ function createProduct(req, res) {
         }
     });
 }
+exports.createProduct = createProduct;
 function updateProduct(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -64,6 +67,7 @@ function updateProduct(req, res) {
         }
     });
 }
+exports.updateProduct = updateProduct;
 // async function deleteProduct (req, res) {
 //   try {
 //     const { id } = req.params
@@ -74,9 +78,3 @@ function updateProduct(req, res) {
 //     return res.status(400).json(err)
 //   }
 // }
-exports.default = {
-    getProduct,
-    createProduct,
-    updateProduct
-    // deleteProduct
-};

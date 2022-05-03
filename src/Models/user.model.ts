@@ -2,9 +2,9 @@ import { Document, Schema, Types, model } from 'mongoose'
 
 export interface IUser extends Document {
   _id: Types.ObjectId,
-  name: String,
-  email: String,
-  password: String,
+  name: string,
+  email: string,
+  password: string,
   permission: Types.ObjectId[],
   company: Types.ObjectId
 }

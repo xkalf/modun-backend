@@ -1,16 +1,16 @@
 import { Schema, Types, model } from 'mongoose'
 
 export interface ICompany {
-  title: String,
-  phone: String,
-  email: String,
-  address: String,
+  title: string,
+  phone: string,
+  email: string,
+  address: string,
   products?: {
     product: Types.ObjectId,
     quantity: number,
-    perCost: Number
+    perCost: number
   }[]
-  isAdmin: Boolean
+  isAdmin: boolean
 }
 
 const companySchema = new Schema<ICompany>({

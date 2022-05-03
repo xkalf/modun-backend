@@ -1,8 +1,8 @@
 import { Schema, model, Document } from 'mongoose'
 
 export interface IProduct extends Document {
-  title: String,
-  unitPrice: Number
+  title: string,
+  unitPrice: number
 }
 
 const productSchema = new Schema<IProduct>({

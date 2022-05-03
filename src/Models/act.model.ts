@@ -2,11 +2,11 @@ import mongoose from 'mongoose'
 
 interface IAct {
   _id: mongoose.Types.ObjectId,
-  title: String,
-  description: String,
+  title: string,
+  description: string,
   products: {
     product: mongoose.Types.ObjectId,
-    quantity: Number
+    quantity: number
   },
   user: mongoose.Types.ObjectId
 }

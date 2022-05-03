@@ -1,7 +1,7 @@
 import { Schema, model, Document } from 'mongoose'
 
 export interface IPermission extends Document {
-  name: String
+  name: string
 }
 
 const permissionSchema = new Schema<IPermission>(
