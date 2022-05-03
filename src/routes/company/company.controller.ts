@@ -5,7 +5,7 @@ import { Types } from 'mongoose'
 
 export async function getCompany (req: Request, res: Response) {
   try {
-    const companies = await Company.find().populate('products.product')
+    const companies = await Company.find()
     if (companies) {
       return res.status(200).json(companies)
     } else {

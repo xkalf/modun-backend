@@ -19,8 +19,9 @@ function getPurchase(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const purchases = yield purchase_model_1.default.find();
-            if (purchases.length === 0 || !purchases)
+            if (purchases.length === 0 || !purchases) {
                 return res.status(500).json('Purchase not found');
+            }
             return res.status(200).json(purchases);
         }
         catch (error) {
@@ -41,18 +42,22 @@ function createPurchase(req, res) {
             const sumFee = newPurchase.transportFee + newPurchase.customsFee + newPurchase.taxFee + newPurchase.logisticFee + newPurchase.otherFee;
             const sumQuantity = newPurchase.products.reduce((a, b) => a + b.quantity, 0);
             const perFee = sumFee / sumQuantity;
-            newPurchase.products.forEach(item => {
-                company.products.push({
-                    product: item.product,
-                    quantity: item.quantity,
-                    perCost: item.costPrice + perFee
-                });
+            newPurchase.products.forEach((item) => {
+                const currentProduct = company.products.find(j => j.product === item.product);
+                if (!currentProduct) {
+                    company.products.push({
+                        product: item.product,
+                        quantity: item.quantity,
+                        perCost: item.costPrice / item.quantity + perFee
+                    });
+                }
+                else {
+                    console.log(currentProduct);
+                }
             });
             const savedCompany = yield company.save();
             if (!savedCompany)
                 return res.status(500).json('cannot save company');
-            if (!newPurchase)
-                return res.status(500).json("Can't create");
             return res.status(200).json(newPurchase);
         }
         catch (error) {
