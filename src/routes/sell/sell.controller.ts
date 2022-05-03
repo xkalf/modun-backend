@@ -6,7 +6,7 @@ export const getSell = async (req:Request, res: Response) => {
   try {
     const sells = await Sell.find()
     if (!sells || sells.length === 0) return res.status(500).json('Sell not found')
-    return res.status(500).json(sells)
+    return res.status(200).json(sells)
   } catch (error) {
     return res.status(500).json(error)
   }
@@ -33,7 +33,7 @@ export const createSell = async (req: Request, res: Response) => {
     if (!savedCompany) return res.status(500).json('Cannot save company')
     if (!savedSell) return res.status(500).json('Cannot save sell')
 
-    return res.status(500).json(savedSell)
+    return res.status(200).json(savedSell)
   } catch (error) {
     return res.status(500).json(error)
   }
