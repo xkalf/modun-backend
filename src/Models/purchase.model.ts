@@ -6,11 +6,11 @@ export interface IPurchase extends Document{
     quantity: number,
     costPrice: number
   }[],
-  transportFee? : number,
-  customsFee? : number,
-  taxFee? : number,
-  logisticFee?: number
-  otherFee? : number,
+  transportFee : number,
+  customsFee : number,
+  taxFee : number,
+  logisticFee: number
+  otherFee : number,
   company: Types.ObjectId
 }
 
@@ -23,11 +23,11 @@ const purchaseSchema = new Schema<IPurchase>(
         costPrice: { type: Number, required: true }
       }
     ],
-    transportFee: { type: Number },
-    customsFee: { type: Number },
-    taxFee: { type: Number },
-    logisticFee: { type: Number },
-    otherFee: { type: Number },
+    transportFee: { type: Number, default: 0 },
+    customsFee: { type: Number, default: 0 },
+    taxFee: { type: Number, default: 0 },
+    logisticFee: { type: Number, default: 0 },
+    otherFee: { type: Number, default: 0 },
     company: {
       type: Schema.Types.ObjectId,
       required: true,
