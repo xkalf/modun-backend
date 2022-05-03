@@ -7,6 +7,7 @@ import productRouter from './routes/product/product.router'
 import purchaseRouter from './routes/purchase/purchase.router'
 import permissionRouter from './routes/permission/permission.router'
 import userRouter from './routes/user/user.router'
+import sellRouter from './routes/sell/sell.router'
 
 const app: Express = express()
 
@@ -22,5 +23,6 @@ app.use('/product', productRouter)
 app.use('/purchase', purchaseRouter)
 app.use('/permission', permissionRouter)
 app.use('/user', userRouter)
+app.use('/sell', sellRouter)
 
 export default app
