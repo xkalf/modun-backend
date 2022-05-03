@@ -5,7 +5,7 @@ import Company from '../../Models/company.model'
 export async function getPurchase (req: Request, res: Response) {
   try {
     const purchases = await Purchase.find()
-    if (purchases.length === 0 || !purchases) return res.status(500).json('Purchase not found')
+    if (purchases.length === 0 || !purchases) { return res.status(500).json('Purchase not found') }
     return res.status(200).json(purchases)
   } catch (error) {
     return res.status(500).json(error)
@@ -20,15 +20,20 @@ export async function createPurchase (req: Request, res: Response) {
     const company = await Company.findById(newPurchase.company)
     if (!company) return res.status(500).json('Company not found')
 
-    const sumFee = newPurchase.transportFee + newPurchase.customsFee + newPurchase.taxFee + newPurchase.logisticFee + newPurchase.otherFee
+    const sumFee =
+      newPurchase.transportFee +
+      newPurchase.customsFee +
+      newPurchase.taxFee +
+      newPurchase.logisticFee +
+      newPurchase.otherFee
     const sumQuantity = newPurchase.products.reduce((a, b) => a + b.quantity, 0)
     const perFee = sumFee / sumQuantity
 
-    newPurchase.products.forEach(item => {
+    newPurchase.products.forEach((item) => {
       company.products.push({
         product: item.product,
         quantity: item.quantity,
-        perCost: item.costPrice + perFee
+        perCost: item.costPrice / item.quantity + perFee
       })
     })
 
