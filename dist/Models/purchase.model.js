@@ -9,11 +9,11 @@ const purchaseSchema = new mongoose_1.Schema({
             costPrice: { type: Number, required: true }
         }
     ],
-    transportFee: { type: Number },
-    customsFee: { type: Number },
-    taxFee: { type: Number },
-    logisticFee: { type: Number },
-    otherFee: { type: Number },
+    transportFee: { type: Number, default: 0 },
+    customsFee: { type: Number, default: 0 },
+    taxFee: { type: Number, default: 0 },
+    logisticFee: { type: Number, default: 0 },
+    otherFee: { type: Number, default: 0 },
     company: {
         type: mongoose_1.Schema.Types.ObjectId,
         required: true,

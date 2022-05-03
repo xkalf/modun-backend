@@ -6,11 +6,14 @@ const companySchema = new mongoose_1.Schema({
     phone: { type: String, required: true },
     email: { type: String },
     address: { type: String, required: true },
-    products: [{
-            product: { type: mongoose_1.Types.ObjectId, ref: 'Product' },
-            quantity: { type: Number, required: true },
-            perCost: { type: Number, required: true }
-        }],
+    products: {
+        type: [{
+                product: { type: mongoose_1.Types.ObjectId, ref: 'Product' },
+                quantity: { type: Number, required: true },
+                perCost: { type: Number, required: true }
+            }],
+        default: []
+    },
     isAdmin: { type: Boolean, default: false }
 }, {
     timestamps: true

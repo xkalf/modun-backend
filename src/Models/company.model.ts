@@ -5,7 +5,7 @@ export interface ICompany {
   phone: string,
   email: string,
   address: string,
-  products?: {
+  products: {
     product: Types.ObjectId,
     quantity: number,
     perCost: number
@@ -18,11 +18,14 @@ const companySchema = new Schema<ICompany>({
   phone: { type: String, required: true },
   email: { type: String },
   address: { type: String, required: true },
-  products: [{
-    product: { type: Types.ObjectId, ref: 'Product' },
-    quantity: { type: Number, required: true },
-    perCost: { type: Number, required: true }
-  }],
+  products: {
+    type: [{
+      product: { type: Types.ObjectId, ref: 'Product' },
+      quantity: { type: Number, required: true },
+      perCost: { type: Number, required: true }
+    }],
+    default: []
+  },
   isAdmin: { type: Boolean, default: false }
 }, {
   timestamps: true

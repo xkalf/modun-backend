@@ -1,6 +1,6 @@
 import express, { Express } from 'express'
 import cors from 'cors'
-import morgan from 'morgan'
+// import morgan from 'morgan'
 
 import companyRouter from './routes/company/company.router'
 import productRouter from './routes/product/product.router'
@@ -16,7 +16,7 @@ app.use(
   })
 )
 app.use(express.json())
-app.use(morgan('combined'))
+// app.use(morgan('combined'))
 app.use('/company', companyRouter)
 app.use('/product', productRouter)
 app.use('/purchase', purchaseRouter)

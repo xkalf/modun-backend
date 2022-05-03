@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createPurchase = exports.getPurchase = void 0;
 const purchase_model_1 = __importDefault(require("../../Models/purchase.model"));
+const company_model_1 = __importDefault(require("../../Models/company.model"));
 function getPurchase(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -33,9 +34,21 @@ function createPurchase(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const newPurchase = yield new purchase_model_1.default(req.body).save();
-            // const company = await companyModel.findById(newPurchase.company)
-            // const sumFee = newPurchase.transportFee + newPurchase.customsFee + newPurchase.taxFee + newPurchase.logisticFee + newPurchase.otherFee
-            // const sumQuantity = newPurchase.products.reduce((a, b) => a.quantity + b.quantity, 0)
+            if (!newPurchase)
+                return res.status(500).json('Cannot create purchase');
+            const company = yield company_model_1.default.findById(newPurchase.company);
+            if (!company)
+                return res.status(500).json('Company not found');
+            const sumFee = newPurchase.transportFee + newPurchase.customsFee + newPurchase.taxFee + newPurchase.logisticFee + newPurchase.otherFee;
+            const sumQuantity = newPurchase.products.reduce((a, b) => a + b.quantity, 0);
+            const perFee = sumFee / sumQuantity;
+            newPurchase.products.forEach(item => {
+                company.products.push({
+                    product: item.product,
+                    quantity: item.quantity,
+                    perCost: item.costPrice + perFee
+                });
+            });
             if (newPurchase)
                 return res.status(200).json(newPurchase);
             else
