@@ -18,7 +18,7 @@ const user_model_1 = __importDefault(require("../../Models/user.model"));
 function getCompany(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const companies = yield company_model_1.default.find().populate('products.product');
+            const companies = yield company_model_1.default.find();
             if (companies) {
                 return res.status(200).json(companies);
             }

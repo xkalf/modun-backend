@@ -43,7 +43,9 @@ function createPurchase(req, res) {
             const sumQuantity = newPurchase.products.reduce((a, b) => a + b.quantity, 0);
             const perFee = sumFee / sumQuantity;
             newPurchase.products.forEach((item) => {
-                const currentProduct = company.products.find(j => j.product === item.product);
+                const products = company.products;
+                const currentProduct = products.find(j => j.product.toString() === item.product.toString());
+                console.log(currentProduct);
                 if (!currentProduct) {
                     company.products.push({
                         product: item.product,
@@ -52,7 +54,8 @@ function createPurchase(req, res) {
                     });
                 }
                 else {
-                    console.log(currentProduct);
+                    currentProduct.quantity += item.quantity;
+                    currentProduct.perCost = (currentProduct.perCost + (item.costPrice / item.quantity + perFee)) / 2;
                 }
             });
             const savedCompany = yield company.save();
