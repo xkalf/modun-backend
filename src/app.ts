@@ -12,11 +12,7 @@ import GroupProductRouter from './routes/groupProduct/groupProduct.router'
 
 const app: Express = express()
 
-app.use(
-  cors({
-    origin: 'http://127.0.0.1:5500'
-  })
-)
+app.use(cors())
 app.use(express.json())
 // app.use(morgan('combined'))
 app.use('/company', companyRouter)

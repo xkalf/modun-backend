@@ -4,7 +4,7 @@ import Company from '../../Models/company.model'
 
 export async function getPurchase (req: Request, res: Response) {
   try {
-    const purchases = await Purchase.find()
+    const purchases = await Purchase.find().populate('company products.product')
     if (purchases.length === 0 || !purchases) { return res.status(500).json('Purchase not found') }
     return res.status(200).json(purchases)
   } catch (error) {
@@ -17,7 +17,7 @@ export async function createPurchase (req: Request, res: Response) {
     const newPurchase = await new Purchase(req.body).save()
     if (!newPurchase) return res.status(500).json('Cannot create purchase')
 
-    const company = await Company.findById(newPurchase.company)
+    const company = await Company.findById(req.body.company)
     if (!company) return res.status(500).json('Company not found')
 
     const sumFee = newPurchase.transportFee + newPurchase.customsFee + newPurchase.taxFee + newPurchase.logisticFee + newPurchase.otherFee

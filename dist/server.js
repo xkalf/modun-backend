@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const http_1 = __importDefault(require("http"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const app_1 = __importDefault(require("./app"));
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 8080;
 const MONGO_URL = 'mongodb+srv://user:user@amazon.2trud.mongodb.net/modun?retryWrites=true&w=majority';
 const server = http_1.default.createServer(app_1.default);
 mongoose_1.default.connection.once('open', () => {

@@ -12,8 +12,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createGroupProduct = exports.getGroupProduct = void 0;
+exports.purchaseGroupProduct = exports.createGroupProduct = exports.getGroupProduct = void 0;
+const company_model_1 = __importDefault(require("../../Models/company.model"));
 const groupProduct_model_1 = __importDefault(require("../../Models/groupProduct.model"));
+const sell_model_1 = __importDefault(require("../../Models/sell.model"));
 const getGroupProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const products = yield groupProduct_model_1.default.find();
@@ -38,3 +40,37 @@ const createGroupProduct = (req, res) => __awaiter(void 0, void 0, void 0, funct
     }
 });
 exports.createGroupProduct = createGroupProduct;
+const purchaseGroupProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { groupProductId, quantity, companyId } = req.body;
+        const groupProduct = yield groupProduct_model_1.default.findById(groupProductId);
+        const company = yield company_model_1.default.findById(companyId);
+        if (!groupProduct)
+            return res.status(500).json('Group Product not found');
+        if (!company)
+            return res.status(500).json('Company not found');
+        groupProduct.products.forEach(i => {
+            const currentProduct = company.products.find(j => j.product === i.product);
+            if (!currentProduct)
+                return res.status(500).json('product not found');
+            if (currentProduct.quantity > i.quantity * quantity)
+                currentProduct.quantity -= i.quantity * quantity;
+            else
+                return res.status(500).json('Product quantity less');
+        });
+        const newSell = yield new sell_model_1.default({
+            products: groupProduct.products,
+            company
+        }).save();
+        if (!newSell)
+            return res.status(500).json('Can not sell');
+        const savedCompany = yield company.save();
+        if (!savedCompany)
+            return res.status(500).json('Can not save company');
+        return res.status(200).json(newSell);
+    }
+    catch (error) {
+        return res.status(500).json(error);
+    }
+});
+exports.purchaseGroupProduct = purchaseGroupProduct;

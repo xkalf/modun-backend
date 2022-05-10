@@ -18,7 +18,7 @@ const company_model_1 = __importDefault(require("../../Models/company.model"));
 function getPurchase(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const purchases = yield purchase_model_1.default.find();
+            const purchases = yield purchase_model_1.default.find().populate('company products.product');
             if (purchases.length === 0 || !purchases) {
                 return res.status(500).json('Purchase not found');
             }
@@ -36,7 +36,7 @@ function createPurchase(req, res) {
             const newPurchase = yield new purchase_model_1.default(req.body).save();
             if (!newPurchase)
                 return res.status(500).json('Cannot create purchase');
-            const company = yield company_model_1.default.findById(newPurchase.company);
+            const company = yield company_model_1.default.findById(req.body.company);
             if (!company)
                 return res.status(500).json('Company not found');
             const sumFee = newPurchase.transportFee + newPurchase.customsFee + newPurchase.taxFee + newPurchase.logisticFee + newPurchase.otherFee;
